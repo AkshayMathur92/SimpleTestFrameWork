@@ -1,0 +1,8 @@
+{
+    
+    "version": "0.1.0",
+    "command": "python",
+    "isShellCommand": false,
+    "args": ["${file}","-i","${workspaceRoot}\\test.json"],
+    "showOutput": "always"
+}
