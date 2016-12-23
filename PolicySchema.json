@@ -1,4 +1,7 @@
 {
     "policy_name" : "",
-    "policy_description" : ""
+    "policy_description" : "",
+    "permissions" : {
+        
+    }
 }

@@ -12,12 +12,11 @@ def read_csv(file):
         for row in reader:
             yield row
 
-def write_csv(outputfile, out_data, mode):
+def write_csv(outputfile, out_data, fieldname, mode):
     """Writes out_data to outputfile with file open mode"""
-    file_handle = open(outputfile, mode, newline='')
-    writer = csv.writer(file_handle, delimiter=',')
-    for line in out_data:
-        writer.writerow(line)
+    file_handle = open(outputfile, mode)
+    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',')
+    writer.writerow(out_data)
     file_handle.close()
 
 def create_json(schema, args):
@@ -25,7 +24,10 @@ def create_json(schema, args):
     schema = json.loads(copy.deepcopy(schema))
     for key in schema:
         if key in args:
-            schema[key] = args[key]
+            if isinstance(args[key], dict):
+                create_json(schema[key], args[key])
+            else:
+                schema[key] = args[key]
     return schema
 
 def main(argv):
@@ -34,20 +36,20 @@ def main(argv):
     specfile = ''
     outputfile = ''
     try:
-        opts, args = getopt.getopt(argv, "hc:s::o", ["csvfile=", "specfile=", "outputfile="])
+        opts, args = getopt.getopt(argv, "c:s:o:", ["csvfile=", "specfile=", "outputfile="])
+        print(opts)
+        for opt, arg in opts:
+            if opt == '-h':
+                print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
+                sys.exit()
+            elif opt in ("-c", "--csvfile"):
+                csvfile = arg
+            elif opt in ("-s", "--specfile"):
+                specfile = arg
+            elif opt in ("-o", "--outputfile"):
+                outputfile = arg
     except getopt.GetoptError:
         print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
-            sys.exit()
-        elif opt in ("-c", "--csvfile"):
-            csvfile = arg
-        elif opt in ("-s", "--specfile"):
-            specfile = arg
-        elif opt in ("-o", "--outputfile"):
-            outputfile = arg
     spec = ""
     with open(specfile, 'r') as sfile:
         spec = sfile.read().replace('\n', '')
@@ -58,5 +60,6 @@ def main(argv):
             res[header] = value
         created_json = create_json(spec, args=res)
         print(json.dumps(created_json))
+        write_csv(outputfile, {'json' : json.dumps(created_json)}, ['json'], 'a')
 
 main(sys.argv[1:])
