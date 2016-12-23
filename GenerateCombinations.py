@@ -4,13 +4,13 @@ import getopt
 import json
 import csv
 from itertools import product
-from collections import OrderedDict
+
 
 
 def read_json(inputfile):
     """Reads Json from the input file"""
     file_handle = open(inputfile)
-    input_data = json.loads(file_handle.read(), object_pairs_hook=OrderedDict)
+    input_data = json.loads(file_handle.read())
     file_handle.close()
     return input_data
 
