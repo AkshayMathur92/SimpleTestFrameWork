@@ -22,29 +22,25 @@
             "POLICY_SWITCH"
         ]
     ],
-    "principal_name": [
-        "amathur",
-        "saggarwa",
-        "stanwar"
-    ],
-    "domain": [
-        "AdobeDOM"
-    ],
-    "principal_type": [
-        "Publisher",
-        "UserOrGroup"
-    ],
-    "principal_name2": [
-        "amathur",
-        "saggarwa",
-        "stanwar"
-    ],
-    "domain2": [
-        "AdobeDOM"
-    ],
-    "principal_type2": [
-        "Publisher",
-        "UserOrGroup"
+    "principals" : [
+        [{
+            "name" : "amathur",
+            "domain" : "AdobeDom",
+            "type" : "UserOrGroup"
+        }],
+        [{
+            "name" : "amathur",
+            "domain" : "AdobeDom",
+            "type" : "UserOrGroup"
+        },
+        {
+            "name" : "amathur",
+            "domain" : "AdobeDom",
+            "type" : "UserOrGroup"
+        }],
+        [{
+            "type" : "AnonymousUser"
+        }]
     ],
     "policy_set_name": [
         "ACPS Policy Set"
