@@ -3,7 +3,7 @@ import sys
 import getopt
 import csv
 import json
-import ModelGenerator
+import copy
 
 def read_csv(file):
     "readind csv rowwise"
@@ -20,23 +20,34 @@ def write_csv(outputfile, out_data, mode):
         writer.writerow(line)
     file_handle.close()
 
+def create_json(schema, args):
+    """generate copy of schema with new values in args"""
+    schema = json.loads(copy.deepcopy(schema))
+    for key in schema:
+        if key in args:
+            schema[key] = args[key]
+    return schema
+
 def main(argv):
     """Main """
     csvfile = ''
     specfile = ''
+    outputfile = ''
     try:
-        opts, args = getopt.getopt(argv, "hc:s:", ["csvfile=", "specfile="])
+        opts, args = getopt.getopt(argv, "hc:s::o", ["csvfile=", "specfile=", "outputfile="])
     except getopt.GetoptError:
-        print(argv[0] + ' -c <csvfile> -s <specfile>')
+        print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print(argv[0] + ' -c <csvfile> -s <specfile>')
+            print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
             sys.exit()
         elif opt in ("-c", "--csvfile"):
             csvfile = arg
         elif opt in ("-s", "--specfile"):
             specfile = arg
+        elif opt in ("-o", "--outputfile"):
+            outputfile = arg
     spec = ""
     with open(specfile, 'r') as sfile:
         spec = sfile.read().replace('\n', '')
@@ -45,7 +56,7 @@ def main(argv):
         res = {}
         for header, value  in row.items():
             res[header] = value
-        policy_json = ModelGenerator.model_factory(spec, args=res)
-        print(json.dumps(policy_json))
+        created_json = create_json(spec, args=res)
+        print(json.dumps(created_json))
 
 main(sys.argv[1:])
