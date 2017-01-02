@@ -4,6 +4,7 @@ import getopt
 import csv
 import json
 import copy
+import ast
 
 def read_csv(file):
     "readind csv rowwise"
@@ -19,15 +20,22 @@ def write_csv(outputfile, out_data, fieldname, mode):
     writer.writerow(out_data)
     file_handle.close()
 
+def write_header(outputfile, out_data, fieldname, mode):
+    """Writes out_data to outputfile with file open mode"""
+    file_handle = open(outputfile, mode)
+    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',')
+    writer.writeheader()
+    file_handle.close()
+
 def create_json(schema, args):
     """generate copy of schema with new values in args"""
     schema = json.loads(copy.deepcopy(schema))
     for key in schema:
         if key in args:
-            if isinstance(args[key], dict):
-                create_json(schema[key], args[key])
-            else:
+            if type(schema[key]) == type(args[key]):
                 schema[key] = args[key]
+            else:
+                schema[key] = ast.literal_eval(args[key])
     return schema
 
 def main(argv):
@@ -54,6 +62,7 @@ def main(argv):
     with open(specfile, 'r') as sfile:
         spec = sfile.read().replace('\n', '')
     input_data = csv.DictReader(open(csvfile, 'r'), delimiter=',', skipinitialspace=True)
+    write_header(outputfile, {}, ['json'], 'w')
     for row in input_data:
         res = {}
         for header, value  in row.items():
