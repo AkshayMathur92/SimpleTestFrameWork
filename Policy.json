@@ -4,7 +4,7 @@
   "name": "#UNIQUE",
   "offline_lease_period": [30, 0],
   "policy_entries": [
-    {
+    [{
       "permissions": [
         "OPEN_ONLINE", "OPEN_OFFLINE", "PRINT_HIGH"
       ],
@@ -13,10 +13,10 @@
         "name": "stanwar",
         "type": "UserOrGroup"
       }
-    },
-    {
+    }],
+    [{
         "type" : "AnonymousUser"
-    }
+    }]
   ],
   "policy_set": ["ACPS Policy Set"],
   "validity_period": [{
