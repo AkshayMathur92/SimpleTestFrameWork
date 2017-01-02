@@ -4,6 +4,7 @@ import getopt
 import json
 import csv
 from itertools import product
+import uuid
 
 
 
@@ -44,11 +45,20 @@ def main(argv):
     input_data = read_json(inputfile)
     if len(outputfile) == 0:
         outputfile = inputfile+'.csv'
-    header = [tuple(input_data.keys())]
+    special_keys = []
+    for key in list(input_data.keys()):
+        if(not isinstance(input_data[key], list)):
+            special_keys.append((key , input_data[key]))
+            input_data.pop(key)
+    header = [tuple(input_data.keys()) + tuple([x[0] for x in special_keys])]
     write_csv(outputfile, header, 'w+')
     output = []
     for element in product(*input_data.values()):
         output.append(element)
-    write_csv(outputfile, output, 'a')
-
+    new_output = []
+    for key, value in special_keys:
+        if value == '#UNIQUE':
+            for row in output:
+                new_output.append(row + (uuid.uuid4(),))
+    write_csv(outputfile, new_output, 'a')
 main(sys.argv[1:])
