@@ -1,0 +1,16 @@
+{
+    "color": [
+        "red",
+        "yellow",
+        "purple"
+    ],
+    "flower": [
+        [
+            "tulip",
+            "lily"
+        ],
+        [
+            "orchid"
+        ]
+    ]
+}

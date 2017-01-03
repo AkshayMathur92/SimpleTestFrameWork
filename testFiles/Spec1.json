@@ -1,0 +1,24 @@
+{
+    "1": {
+        "fixed": [
+            "color"
+        ],
+        "default": [
+            "flower"
+        ]
+    },
+    "2": {
+        "fixed": [
+            "color",
+            "flower"
+        ],
+        "default": []
+    },
+    "3": {
+        "fixed": [],
+        "default": [
+            "color",
+            "flower"
+        ]
+    }
+}

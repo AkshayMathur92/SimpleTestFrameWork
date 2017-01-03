@@ -1,0 +1,21 @@
+{
+    "offline_lease": [
+        "0",
+        "-1",
+        "1",
+        "30",
+        "60",
+        "365"
+    ],
+    "publisher": [
+        "amathur",
+        "kbodas",
+        "stanwar"
+    ],
+    "author" : [
+        "Douglas Adam",
+        "George Orwell",
+        "JK Rowling",
+        "George RR Martin"
+    ]
+}
