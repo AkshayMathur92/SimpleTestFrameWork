@@ -16,14 +16,14 @@ def read_csv(file):
 def write_csv(outputfile, out_data, fieldname, mode):
     """Writes out_data to outputfile with file open mode"""
     file_handle = open(outputfile, mode)
-    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',')
+    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',', lineterminator='\n')
     writer.writerow(out_data)
     file_handle.close()
 
-def write_header(outputfile, out_data, fieldname, mode):
+def write_header(outputfile, fieldname, mode):
     """Writes out_data to outputfile with file open mode"""
     file_handle = open(outputfile, mode)
-    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',')
+    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',', lineterminator='\n')
     writer.writeheader()
     file_handle.close()
 
@@ -62,7 +62,7 @@ def main(argv):
     with open(specfile, 'r') as sfile:
         spec = sfile.read().replace('\n', '')
     input_data = csv.DictReader(open(csvfile, 'r'), delimiter=',', skipinitialspace=True)
-    write_header(outputfile, {}, ['json'], 'w')
+    write_header(outputfile, ['json'], 'w')
     for row in input_data:
         res = {}
         for header, value  in row.items():

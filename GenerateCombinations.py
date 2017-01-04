@@ -47,8 +47,8 @@ def main(argv):
         outputfile = inputfile+'.csv'
     special_keys = []
     for key in list(input_data.keys()):
-        if(not isinstance(input_data[key], list)):
-            special_keys.append((key , input_data[key]))
+        if not isinstance(input_data[key], list):
+            special_keys.append((key, input_data[key]))
             input_data.pop(key)
     header = [tuple(input_data.keys()) + tuple([x[0] for x in special_keys])]
     write_csv(outputfile, header, 'w+')
