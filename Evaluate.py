@@ -15,6 +15,7 @@ def read_csv(file):
 
 def main(argv):
     """Main """
+    result = []
     csvfile = ''
     functionfile = ''
     try:
@@ -42,6 +43,11 @@ def main(argv):
                 new_row[key] = int(value)
             else:
                 new_row[key] = value
-        eval_module.evaluate(**new_row)
+        try:
+            eval_module.evaluate(**new_row)
+            result.append("PASS")
+        except Exception:
+            result.append("FAIL")
 
+    print(result)
 main(sys.argv[1:])
