@@ -48,6 +48,7 @@ def main(argv):
     outputfile = csvfile + '_evaluated_.csv'
     header = read_csv_header(csvfile)
     header.append('RESULT')
+    header.append('REASON')
     write_csv_header(outputfile, header, 'w+')
     file_handle = open(outputfile, 'a')
     writer = csv.DictWriter(file_handle, fieldnames=header, delimiter=',', lineterminator='\n')
@@ -57,8 +58,10 @@ def main(argv):
     for row in read_csv(csvfile):
         new_row = {}
         for key, value in row.items():
-            if isinstance(value, str) and (value.startswith('[') or value.startswith('{') or boolean.match(value)):
+            if isinstance(value, str) and (value.startswith('[') or value.startswith('{')):
                 new_row[key] = ast.literal_eval(value)
+            elif boolean.match(value):
+                new_row[key] = bool(value)
             elif isinstance(value, str) and number.match(value):
                 new_row[key] = int(value)
             else:
@@ -66,7 +69,8 @@ def main(argv):
         try:
             eval_module.evaluate(**new_row)
             new_row['RESULT'] = "PASS"
-        except Exception:
+        except AssertionError as err:
             new_row['RESULT'] = "FAIL"
+            new_row['REASON'] = err
         writer.writerow(new_row)
 main(sys.argv[1:])
