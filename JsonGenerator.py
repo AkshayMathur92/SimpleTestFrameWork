@@ -69,6 +69,6 @@ def main(argv):
             res[header] = value
         created_json = create_json(spec, args=res)
         print(json.dumps(created_json))
-        write_csv(outputfile, {'json' : json.dumps(created_json)}, ['json'], 'a')
+        write_csv(outputfile, {'json' : json.dumps(created_json), 'RESULT' : row['RESULT']}, ['json', 'RESULT'], 'a')
 
 main(sys.argv[1:])

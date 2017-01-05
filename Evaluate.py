@@ -12,12 +12,26 @@ def read_csv(file):
         reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
             yield row
+def read_csv_header(file):
+    "read csv header"
+    header = []
+    with open(file, 'r') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=',')
+        header = reader.fieldnames
+    return header
+
+def write_csv_header(outputfile, fieldname, mode):
+    """Writes out_data to outputfile with file open mode"""
+    file_handle = open(outputfile, mode)
+    writer = csv.DictWriter(file_handle, fieldnames=fieldname, delimiter=',', lineterminator='\n')
+    writer.writeheader()
+    file_handle.close()
 
 def main(argv):
     """Main """
-    result = []
     csvfile = ''
     functionfile = ''
+    outputfile = ''
     try:
         opts, args = getopt.getopt(argv, "hc:f:", ["csvfile=", "functionfile="])
     except getopt.GetoptError:
@@ -31,6 +45,12 @@ def main(argv):
             csvfile = arg
         elif opt in ("-f", "--functionfile"):
             functionfile = arg
+    outputfile = csvfile + '_evaluated_.csv'
+    header = read_csv_header(csvfile)
+    header.append('RESULT')
+    write_csv_header(outputfile, header, 'w+')
+    file_handle = open(outputfile, 'a')
+    writer = csv.DictWriter(file_handle, fieldnames=header, delimiter=',', lineterminator='\n')
     eval_module = SourceFileLoader("evaluate", functionfile).load_module()
     number = re.compile("[0-9]+$")
     boolean = re.compile("^([Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])$")
@@ -45,9 +65,8 @@ def main(argv):
                 new_row[key] = value
         try:
             eval_module.evaluate(**new_row)
-            result.append("PASS")
+            new_row['RESULT'] = "PASS"
         except Exception:
-            result.append("FAIL")
-
-    print(result)
+            new_row['RESULT'] = "FAIL"
+        writer.writerow(new_row)
 main(sys.argv[1:])
