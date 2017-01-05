@@ -17,7 +17,6 @@
   ],
   "policy_set": "ACPS Policy Set",
   "validity_period": {
-    "absolute": true,
     "begin": "2016-12-21T18:30:34.977Z",
     "days": 0,
     "end": "2016-12-21T18:30:34.977Z"
