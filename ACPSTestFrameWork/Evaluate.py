@@ -33,19 +33,21 @@ def main(argv):
     functionfile = ''
     outputfile = ''
     try:
-        opts, args = getopt.getopt(argv, "hc:f:", ["csvfile=", "functionfile="])
+        opts, args = getopt.getopt(argv, "hc:f:o:", ["csvfile=", "functionfile=", "outputfile="])
     except getopt.GetoptError:
-        print(argv[0] + ' -c <csvfile> -f <functionfile>')
+        print(argv[0] + ' -c <csvfile> -f <functionfile> -o <outputfile>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print(argv[0] + ' -c <csvfile> -f <functionfile>')
+            print(argv[0] + ' -c <csvfile> -f <functionfile> -o <outputfile>')
             sys.exit()
         elif opt in ("-c", "--csvfile"):
             csvfile = arg
         elif opt in ("-f", "--functionfile"):
             functionfile = arg
-    outputfile = csvfile + '_evaluated_.csv'
+        elif opt in ("-o", "--outputfile"):
+            outputfile = arg
+    # outputfile = csvfile + '_evaluated_.csv'
     header = read_csv_header(csvfile)
     header.append('RESULT')
     header.append('REASON')
@@ -73,4 +75,6 @@ def main(argv):
             new_row['RESULT'] = "FAIL"
             new_row['REASON'] = err
         writer.writerow(new_row)
-main(sys.argv[1:])
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

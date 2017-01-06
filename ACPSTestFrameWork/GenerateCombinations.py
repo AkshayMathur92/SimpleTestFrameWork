@@ -61,4 +61,6 @@ def main(argv):
             for row in output:
                 new_output.append(row + (uuid.uuid4(),))
     write_csv(outputfile, new_output, 'a')
-main(sys.argv[1:])
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

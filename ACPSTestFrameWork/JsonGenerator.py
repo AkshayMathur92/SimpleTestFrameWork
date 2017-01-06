@@ -45,7 +45,6 @@ def main(argv):
     outputfile = ''
     try:
         opts, args = getopt.getopt(argv, "c:s:o:", ["csvfile=", "specfile=", "outputfile="])
-        print(opts)
         for opt, arg in opts:
             if opt == '-h':
                 print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
@@ -70,4 +69,5 @@ def main(argv):
         created_json = create_json(spec, args=res)
         write_csv(outputfile, {'json' : json.dumps(created_json), 'RESULT' : row['RESULT']}, ['json', 'RESULT'], 'a')
 
-main(sys.argv[1:])
+if __name__ == "__main__":
+    main(sys.argv[1:])
