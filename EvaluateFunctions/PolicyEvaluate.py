@@ -12,8 +12,13 @@ def evaluate(policy_entries=None, policy_set_name=None, watermark_id=None, name=
              policy_set=None, validity_period=None):
     """evaluate function"""
     assert isinstance(customizable, bool), "customizable should be boolean"
-    assert isinstance(offline_lease_period, int) and offline_lease_period > 0 and offline_lease_period < 10000 , "offline_lease_period should be integer bw 0 - 1000 "
-    assert isinstance(description, str) and len(description) < 250 and DESCRIPTION_REGEX.match(description) , "description length should be integer bw 0-250 and should not contain <>$\"\\\\+"
+
+    assert isinstance(offline_lease_period, int) ,"offline_lease_period should be integer"
+    assert offline_lease_period > 0 and offline_lease_period < 10000 ,"offline_lease_period should be integer bw 0 - 1000 "
+
+    assert isinstance(description, str) and len(description) < 250 and len(description) >= 0 ,"lenght of description should be bw 0 - 250"
+    assert DESCRIPTION_REGEX.match(description) , "description should not contain <>$\"\\\\+"
+    
     assert isinstance(name, str) and len(name) < 50, "name length should be integer bw 0-50"
 
     assert isinstance(validity_period, dict) , "validity_period should be a JSON object"
