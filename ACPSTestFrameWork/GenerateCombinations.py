@@ -55,7 +55,7 @@ def main(argv):
     output = []
     for element in product(*input_data.values()):
         output.append(element)
-    new_output = []
+    new_output = output
     for key, value in special_keys:
         if value == '#UNIQUE':
             for row in output:

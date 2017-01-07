@@ -60,7 +60,8 @@ def main(argv):
     spec = ""
     with open(specfile, 'r') as sfile:
         spec = sfile.read().replace('\n', '')
-    input_data = csv.DictReader(open(csvfile, 'r'), delimiter=',', skipinitialspace=True)
+    file_handle = open(csvfile, 'r')
+    input_data = csv.DictReader(file_handle, delimiter=',', skipinitialspace=True)
     write_header(outputfile, ['json','RESULT'], 'w')
     for row in input_data:
         res = {}
@@ -68,6 +69,7 @@ def main(argv):
             res[header] = value
         created_json = create_json(spec, args=res)
         write_csv(outputfile, {'json' : json.dumps(created_json), 'RESULT' : row['RESULT']}, ['json', 'RESULT'], 'a')
-
+    file_handle.close()
+    
 if __name__ == "__main__":
     main(sys.argv[1:])

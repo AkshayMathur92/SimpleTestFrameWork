@@ -75,6 +75,7 @@ def main(argv):
             new_row['RESULT'] = "FAIL"
             new_row['REASON'] = err
         writer.writerow(new_row)
+    file_handle.close()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
