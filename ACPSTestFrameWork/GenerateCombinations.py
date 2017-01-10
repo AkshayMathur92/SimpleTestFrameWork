@@ -5,6 +5,7 @@ import json
 import csv
 from itertools import product
 import uuid
+import copy
 
 
 
@@ -55,12 +56,15 @@ def main(argv):
     output = []
     for element in product(*input_data.values()):
         output.append(element)
-    new_output = output
+    new_output = []
     for key, value in special_keys:
         if value == '#UNIQUE':
             for row in output:
                 new_output.append(row + (uuid.uuid4(),))
-    write_csv(outputfile, new_output, 'a')
+    if len(new_output) > 0:
+        write_csv(outputfile, new_output, 'a')
+    else:
+        write_csv(outputfile, output, 'a')
 
 if __name__ == "__main__":
     main(sys.argv[1:])

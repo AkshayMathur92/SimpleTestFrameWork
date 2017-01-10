@@ -32,9 +32,9 @@ def main(argv):
     print('Generating all test cases')
     generatecombination(("-i", inputvaluesfile, "-o", './ACPSTestFrameWork/temp/' + apiname +'_combinations.csv'))
     print('Evaluating all test cases')
-    evaluate(("-c", './ACPSTestFrameWork/temp/' + apiname +'_combinations.csv', "-f", functionfile,"-o", "./output/"+apiname+"_evaluated.csv"))
+    evaluate(("-c", './ACPSTestFrameWork/temp/' + apiname +'_combinations.csv', "-f", functionfile,"-o", "./ACPSTestFrameWork/temp/"+apiname+"_evaluated.csv"))
     print('Creating Json for all test cases')
-    jsongenerator(("-c",'./output/' + apiname +'_evaluated.csv', "-s", jsonschemafile, "-o", "./output/"+apiname+"_json.csv"))
+    jsongenerator(("-c",'./ACPSTestFrameWork/temp/' + apiname +'_evaluated.csv', "-s", jsonschemafile, "-o", "./output/"+apiname+"_json.csv"))
 
 
 if __name__ == "__main__":

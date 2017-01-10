@@ -27,6 +27,15 @@ def write_header(outputfile, fieldname, mode):
     writer.writeheader()
     file_handle.close()
 
+
+def read_csv_header(file):
+    "read csv header"
+    header = []
+    with open(file, 'r') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=',')
+        header = reader.fieldnames
+    return header
+
 def create_json(schema, args):
     """generate copy of schema with new values in args"""
     schema = json.loads(copy.deepcopy(schema))
@@ -58,17 +67,19 @@ def main(argv):
     except getopt.GetoptError:
         print(argv[0] + ' -c <csvfile> -s <specfile> -o <outputfile>')
     spec = ""
+    headers = read_csv_header(csvfile)
+    headers.append('json')
+    write_header(outputfile, headers, 'w+')
     with open(specfile, 'r') as sfile:
         spec = sfile.read().replace('\n', '')
     file_handle = open(csvfile, 'r')
     input_data = csv.DictReader(file_handle, delimiter=',', skipinitialspace=True)
-    write_header(outputfile, ['json','RESULT'], 'w')
     for row in input_data:
         res = {}
         for header, value  in row.items():
             res[header] = value
-        created_json = create_json(spec, args=res)
-        write_csv(outputfile, {'json' : json.dumps(created_json), 'RESULT' : row['RESULT']}, ['json', 'RESULT'], 'a')
+            res.update({'json' : create_json(spec, args=res)})
+        write_csv(outputfile, res, headers, 'a')
     file_handle.close()
     
 if __name__ == "__main__":
