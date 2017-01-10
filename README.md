@@ -77,3 +77,9 @@ A generic test framework for creating jsons files according to given spec and va
 5. This would create a csv named setprofile_evaluated.csv conaining an exhautive list of test cases marked with Result (PASS/FAIL) with a reson of failure in REASON column.
 
 6. Additionally this would also create a csv file containing proper json body according to the schema spec of the api with its EXPECTED RESULT, which can be used by any curl client to run and evaluate the each test case. 
+
+7. Now for every api just call main :
+	
+	python main.py -a setprofile
+	python main.py -a getprofile
+
