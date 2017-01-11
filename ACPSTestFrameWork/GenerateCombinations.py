@@ -6,7 +6,7 @@ import csv
 from itertools import product
 import uuid
 import copy
-
+from ACPSTestFrameWork.all_pairs2 import all_pairs2 as pairwise
 
 
 def read_json(inputfile):
@@ -54,13 +54,15 @@ def main(argv):
     header = [tuple(input_data.keys()) + tuple([x[0] for x in special_keys])]
     write_csv(outputfile, header, 'w+')
     output = []
-    for element in product(*input_data.values()):
+    values = list(input_data.values())
+    # for element in product(*input_data.values()):
+    for element in pairwise(values, n = len(values)):
         output.append(element)
     new_output = []
     for key, value in special_keys:
         if value == '#UNIQUE':
             for row in output:
-                new_output.append(row + (uuid.uuid4(),))
+                new_output.append(tuple(row) + (uuid.uuid4(),))
     if len(new_output) > 0:
         write_csv(outputfile, new_output, 'a')
     else:

@@ -40,7 +40,7 @@
         }
     ],
     "parent_policy_id": [
-        "123",
+        "12-3",
         "null"
     ],
     "permissions": [
@@ -117,21 +117,7 @@
                 }
             ]
         },
-        // {
-        //     "constraint": "CHANGEABLE",
-        //     "value": [
-        //         {
-        //             "domain": "AdobeLDAP",
-        //             "name": "stanwar",
-        //             "type": "UserOrGroup"
-        //         },
-        //         {
-        //             "domain": "Test_LOCAL_DOMAIN",
-        //             "name": "ACPSTESTExternalGroup USER",
-        //             "type": "UserOrGroup"
-        //         }
-        //     ]
-        // },
+        
         {
             "constraint": "CHANGEABLE",
             "value": [

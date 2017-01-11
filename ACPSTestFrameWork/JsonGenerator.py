@@ -76,15 +76,15 @@ def main(argv):
         spec = sfile.read().replace('\n', '')
     file_handle = open(csvfile, 'r')
     input_data = csv.DictReader(file_handle, delimiter=',', skipinitialspace=True)
-    unique = set()
+    # unique = set()
     for row in input_data:
         res = {}
         for header, value  in row.items():
             res[header] = value
             res.update({'json' : json.dumps(create_json(spec, args=res))})
-        if len(res['REASON']) == 0 or res['REASON'] not in unique:
-            unique.add(res['REASON'])
-            write_csv(outputfile, res, headers, 'a')
+        # if len(res['REASON']) == 0 or res['REASON'] not in unique:
+        #     unique.add(res['REASON'])
+        write_csv(outputfile, res, headers, 'a')
     file_handle.close()
     
 if __name__ == "__main__":
