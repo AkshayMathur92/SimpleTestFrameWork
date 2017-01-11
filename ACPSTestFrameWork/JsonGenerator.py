@@ -43,6 +43,8 @@ def create_json(schema, args):
         if key in args:
             if type(schema[key]) == type(args[key]):
                 schema[key] = args[key]
+                if args[key].lower() == "null":
+                    schema[key] = None
             else:
                 schema[key] = ast.literal_eval(args[key])
     return schema
@@ -74,12 +76,15 @@ def main(argv):
         spec = sfile.read().replace('\n', '')
     file_handle = open(csvfile, 'r')
     input_data = csv.DictReader(file_handle, delimiter=',', skipinitialspace=True)
+    unique = set()
     for row in input_data:
         res = {}
         for header, value  in row.items():
             res[header] = value
-            res.update({'json' : create_json(spec, args=res)})
-        write_csv(outputfile, res, headers, 'a')
+            res.update({'json' : json.dumps(create_json(spec, args=res))})
+        if len(res['REASON']) == 0 or res['REASON'] not in unique:
+            unique.add(res['REASON'])
+            write_csv(outputfile, res, headers, 'a')
     file_handle.close()
     
 if __name__ == "__main__":

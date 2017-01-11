@@ -1,144 +1,240 @@
 {
-    "customizable": [
-        false,
-        true,
-        1
-    ],
     "description": [
         "Example Policy Description",
         "This is more than 250: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dapibus euismod tempus. Nullam dapibus sodales ligula quis aliquet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce varius mollis sapien id amet. ",
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue urna vitae ex finibus rhoncus. Sed a pretium libero. Quisque velit magna, ultricies vel egestas eget, auctor quis nisl. Aliquam quis mi neque. Phasellus at magna luctus turpis duis.",
-        "Hello&World<>"
+        "Hello&World<>",
+        1
+    ],
+    "is_tracked": [
+        {
+            "constraint": "CHANGEABLE",
+            "value": false
+        },
+        {
+            "constraint": "NOT_CHANGEABLE",
+            "value": true
+        },
+        {
+            "constraint": "NOT_APPLICABLE",
+            "value": 1
+        }
     ],
     "name": "#UNIQUE",
     "offline_lease_period": [
-        30,
-        9999,
-        10000
+        {
+            "constraint": "CHANGEABLE",
+            "value": 9999
+        },
+        {
+            "constraint": "NOT_CHANGEABLE",
+            "value": 1
+        },
+        {
+            "constraint": "CHANGEABLE",
+            "value": 10000
+        },
+        {
+            "constraint": "NOT_APPLICABLE",
+            "value": 9999
+        }
     ],
-    "policy_entries": [
-        [
-            {
-                "permissions": [
-                    "OPEN_ONLINE",
-                    "OPEN_OFFLINE",
-                    "PRINT_HIGH"
-                ],
-                "principal": {
-                    "domain": "AdobeDom",
-                    "name": "stanwar",
-                    "type": "UserOrGroup"
-                }
-            }
-        ],
-        [
-            {
-                "principal": {
-                    "type": "AnonymousUser"
-                },
-                "permissions": [
-                    "CHANGES_ALL_EXCEPT_EXTRACT_CONTENT",
-                    "COPY"
-                ]
-            }
-        ],
-        [
-            {
-                "permissions": [
-                    "OPEN_ONLINE",
-                    "OPEN_OFFLINE",
-                    "REVOKE",
-                    "POLICY_SWITCH",
-                    "PRINT_HIGH",
-                    "PRINT_LOW",
-                    "CHANGES_COMMENTING_FORM_FILL_IN_AND_SIGNING",
-                    "CHANGES_ALL_EXCEPT_EXTRACT_CONTENT",
-                    "COPY",
-                    "ACCESSIBLE"
-                ],
-                "principal": {
-                    "domain": "AdobeDom",
-                    "name": "stanwar",
-                    "type": "UserOrGroup"
-                }
-            }
-        ],
-        [
-            {
-                "permissions": [
-                    "OPEN_ONLINE",
-                    "OPEN_OFFLINE"
-                ],
-                "principal": {
-                    "domain": "AdobeDom",
-                    "name": "stanwar",
-                    "type": "UserOrGroup"
-                }
-            },
-            {
-                "permissions": [
-                    "OPEN_ONLINE",
-                    "OPEN_OFFLINE"
-                ],
-                "principal": {
-                    "type": "AnonymousUser"
-                }
-            }
-        ],
-        [
-            {
-                "permissions": [
-                    "OPEN_ONLINE",
-                    "OPEN_OFFLINE"
-                ],
-                "principal": {
-                    "domain": "AdobeDom",
-                    "name": "stanwar",
-                    "type": "UserOrGroup"
-                }
-            },
-            {
-                "permissions": [
-                    "OPEN_ONLINE",
-                    "OPEN_OFFLINE"
-                ],
-                "principal": {
-                    "domain": "AdobeDom",
-                    "name": "amathur",
-                    "type": "UserOrGroup"
-                }
-            }
-        ],
-        []
+    "parent_policy_id": [
+        "123",
+        "null"
+    ],
+    "permissions": [
+        {
+            "constraint": "NOT_APPLICABLE",
+            "value": [
+                "OPEN_ONLINE",
+                "OPEN_OFFLINE",
+                "PRINT_HIGH"
+            ]
+        },
+        {
+            "constraint": "CHANGEABLE",
+            "value": [
+                "CHANGES_ALL_EXCEPT_EXTRACT_CONTENT",
+                "COPY"
+            ]
+        },
+        {
+            "constraint": "NOT_CHANGEABLE",
+            "value": [
+                "OPEN_ONLINE",
+                "OPEN_OFFLINE",
+                "REVOKE",
+                "POLICY_SWITCH",
+                "PRINT_HIGH",
+                "PRINT_LOW",
+                "CHANGES_COMMENTING_FORM_FILL_IN_AND_SIGNING",
+                "CHANGES_ALL_EXCEPT_EXTRACT_CONTENT",
+                "COPY",
+                "ACCESSIBLE"
+            ]
+        }
     ],
     "policy_set": [
-        "ACPS Policy Set"
+        "Test_PolicySet_Combination_1",
+        "Test_PolicySet_Combination_2",
+        "Test_PolicySet_EXTERNAL",
+        "Test_PolicySet_INTERNAL"
+    ],
+    "policy_type": [
+        "CUSTOMIZABLE",
+        "AD_HOC",
+        "NON_CUSTOMIZABLE"
+    ],
+    "principals": [
+        {
+            "constraint": "CHANGEABLE",
+            "value": [
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "saggarwa",
+                    "type": "UserOrGroup"
+                },
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "stanwar",
+                    "type": "UserOrGroup"
+                }
+            ]
+        },
+        {
+            "constraint": "NOT_CHANGEABLE",
+            "value": [
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "saggarwa",
+                    "type": "UserOrGroup"
+                },
+                {
+                    "domain": "Test_LOCAL_DOMAIN",
+                    "name": "ACPSTEST USER",
+                    "type": "UserOrGroup"
+                }
+            ]
+        },
+        // {
+        //     "constraint": "CHANGEABLE",
+        //     "value": [
+        //         {
+        //             "domain": "AdobeLDAP",
+        //             "name": "stanwar",
+        //             "type": "UserOrGroup"
+        //         },
+        //         {
+        //             "domain": "Test_LOCAL_DOMAIN",
+        //             "name": "ACPSTESTExternalGroup USER",
+        //             "type": "UserOrGroup"
+        //         }
+        //     ]
+        // },
+        {
+            "constraint": "CHANGEABLE",
+            "value": [
+                {
+                    "domain": "Test_LOCAL_DOMAIN",
+                    "name": "ACPSTEST USER",
+                    "type": "UserOrGroup"
+                }
+            ]
+        },
+        {
+            "constraint": "NOT_CHANGEABLE",
+            "value": [
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "ACPSTEST USER",
+                    "type": "UserOrGroup"
+                }
+            ]
+        },
+        {
+            "constraint": "CHANGEABLE",
+            "value": [
+                {
+                    "type": "AnonymousUser"
+                }
+            ]
+        },
+        {
+            "constraint": "CHANGEABLE",
+            "value": [
+                {
+                    "domain": "Test_LOCAL_DOMAIN",
+                    "name": "ACPSTEST USER",
+                    "type": "AnonymousUser"
+                }
+            ]
+        },
+        {
+            "constraint": "CHANGEABLE",
+            "value": [
+                {
+                    "type": "AnonymousUser"
+                },
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "saggarwa",
+                    "type": "UserOrGroup"
+                }
+            ]
+        },
+        {
+            "constraint": "NOT_APPLICABLE",
+            "value": [
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "amathur",
+                    "type": "UserOrGroup"
+                },
+                {
+                    "domain": "AdobeLDAP",
+                    "name": "stanwar",
+                    "type": "UserOrGroup"
+                }
+            ]
+        },
+        {
+            "constraint": "CHANGEABLE",
+            "value": []
+        }
     ],
     "validity_period": [
         {
-            "begin": "2016-12-21T18:30:34.977Z",
-            "end": "2016-12-21T18:31:34.977Z"
+            "constraint": "CHANGEABLE",
+            "value": {
+                "begin": "2016-12-21T18:30:34.977Z",
+                "end": "2016-12-21T18:31:34.977Z"
+            }
         },
         {
-            "begin": "2016-12-21T18:32:34.977Z",
-            "end": "2016-12-21T18:31:34.977Z"
+            "constraint": "NOT_CHANGEABLE",
+            "value": {
+                "begin": "2016-12-21T18:32:34.977Z",
+                "end": "2016-12-21T18:31:34.977Z"
+            }
         },
         {
-            "days": 30
+            "constraint": "CHANGEABLE",
+            "value": {
+                "days": 30
+            }
         },
         {
-          "begin": "2016-12-21T18:30:34.977Z",
-            "end": "2016-12-21T18:31:34.977Z",
-            "days": 30
-        },
-        {
-            "days": 10000
-        },
-        {
-            "days": 0.3
+            "constraint": "NOT_APPLICABLE",
+            "value": {
+                "days": 30
+            }
         }
     ],
     "watermark_id": [
-        ""
+        {
+            "constraint": "NOT_CHANGEABLE",
+            "value": ""
+        }
     ]
 }
